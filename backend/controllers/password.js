@@ -24,7 +24,6 @@ function decryptPassword(encryptedData, key, ivHex) {
 }
 
 async function handlepasswordsave(req,res) {
-    console.log(req.body);
     const {domain , username , password} = req.body;
     const iv = crypto.randomBytes(16);
     const masterKey = crypto.createHash('sha256').update(process.env.KEY.toString()).digest();
@@ -63,8 +62,26 @@ async function handlegetallpasswords(req,res) {
     }
     
 }
+async function handleDelete(req,res) {
+    try{
+        const masterKey = crypto.createHash('sha256').update(process.env.KEY.toString()).digest();
+        const data = req.body;
+        const pass = await Pass.findOneAndDelete(data);
+        
+        return res.status(200).json({
+            message:"Success"
+        });
+    }catch(err) {
+        console.error(err);
+        return res.status(500).json({
+            message: "Something went wrong"
+        })
+    }
+    
+}
 
 module.exports = {
     handlegetallpasswords,
-    handlepasswordsave
+    handlepasswordsave,
+    handleDelete,
 }
