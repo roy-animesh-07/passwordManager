@@ -28,6 +28,11 @@ async function handlepasswordsave(req,res) {
     const iv = crypto.randomBytes(16);
     const masterKey = crypto.createHash('sha256').update(process.env.KEY.toString()).digest();
     const encrypted = encryptPassword(password, masterKey, iv);
+    const dat = {domain};
+    if(dat){
+        const pass = await Pass.findOneAndDelete(dat);
+    }
+    
     const data = {
         domain,
         username,

@@ -4,6 +4,9 @@ const PasswordRow = (props) => {
     const [delsuc, setDelsuc] = useState(0);
     const [hidden, setHidden] = useState(true);
     const handleEdit = () => {
+        props.setDomain(props.domain);
+        props.setUsername(props.username);
+        props.setPassword(props.password);
 
     }
     const handleDelete = () => {
